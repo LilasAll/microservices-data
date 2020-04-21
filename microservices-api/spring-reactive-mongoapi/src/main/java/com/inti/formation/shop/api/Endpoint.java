@@ -134,7 +134,7 @@ public class Endpoint {
     // ************** Stockinit : 
     // **************************
     
-    @PostMapping(value = "/register_product" , headers = "Accept=application/json; charset=utf-8")
+    @PostMapping(value = "/registerProduct" , headers = "Accept=application/json; charset=utf-8")
     @ResponseStatus( value  = HttpStatus.CREATED, reason="Stock is created" )
     public Mono<String> createStock(@RequestBody Stockinit stockinit) {
 
@@ -158,6 +158,10 @@ public class Endpoint {
                 .switchIfEmpty(Flux.error(new ResponseStatusException(HttpStatus.NOT_FOUND)))
                 .map( stockinit-> stockinit);
     }
+    
+    
+    
+    
     
 
 }
