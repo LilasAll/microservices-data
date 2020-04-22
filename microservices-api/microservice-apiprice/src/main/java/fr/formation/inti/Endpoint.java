@@ -33,7 +33,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/v1/shop")
+@RequestMapping(value = "/v2/shop")
 @Slf4j
 public class Endpoint {
 
