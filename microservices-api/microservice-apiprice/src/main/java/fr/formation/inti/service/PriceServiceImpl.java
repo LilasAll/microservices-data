@@ -1,5 +1,7 @@
 package fr.formation.inti.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,5 +47,11 @@ public class PriceServiceImpl implements IPriceService{
 		p.setActive(false);
 		return priceRepository.save(p);
 	}
+
+//	@Override
+//	public Flux<Price> getActiveByDate(Date d) {
+//		// TODO Auto-generated method stub
+//		return priceRepository.findByDateAndActive(d);
+//	}
 
 }

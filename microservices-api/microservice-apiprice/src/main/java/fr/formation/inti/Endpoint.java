@@ -3,8 +3,11 @@ package fr.formation.inti;
 import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.status;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -126,15 +129,16 @@ public class Endpoint {
 	                });
 	    }
 	    @GetMapping
-	    @RequestMapping(value = "/prices{pricedateandactive}")
+	    @RequestMapping(value = "/prices/{date}")
 
-	    public Flux<Price> getPrices(@RequestParam(required = true, name = "pricedateandactive") Price price ) {
-	        log.info("Searching  {} ",price );
-	        return pricerepository.findByDateAndActive(price.getDate(), price.isActive())
+	    public Flux<Price> getActiveByDate(@RequestParam(required = true, name = "date")
+	    	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm:ss.SSSZZZZ")Date date ) {
+	        log.info("Searching  {} ",date );
+	        return pricerepository.findByDateAndActive(date)
 
 	                // uses of doNext
 
-	        		.map( data-> data);
+	        		.doOnNext(price -> log.info(price.getDate()+ " is found"));
 
 	    }
 }

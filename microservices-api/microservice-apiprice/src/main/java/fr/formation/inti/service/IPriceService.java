@@ -2,6 +2,8 @@ package fr.formation.inti.service;
 
 
 
+import java.util.Date;
+
 import fr.formation.inti.repository.model.Price;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,4 +17,5 @@ public interface IPriceService {
 	public Mono<Price> update(Price p);
 	public Mono<Price> active(Price p);
 	public Mono<Price> desactive(Price p);
+//	public Flux<Price> getActiveByDate(Date d);
 }
