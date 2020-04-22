@@ -42,6 +42,8 @@ public class Endpoint {
     @Autowired
     CustomerService customerService;
 
+    
+
     @ExceptionHandler(ValidationParameterException.class)
     public Mono<ResponseEntity<String>> handlerValidationParameterException(ValidationParameterException e) {
      return Mono.just(
