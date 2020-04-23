@@ -1,0 +1,11 @@
+version: "3"
+services:
+  microservice-apiprice:
+    #network_mode: "host"
+    image: "api:latest"
+    environment:
+      SERVER_PORT: 8085
+      SPRING_APPLICATION_NAME: microservice-apiprice
+      SPRING_URI: localhost:27017,mongodb://localhost:27017
+      SPRING_DATABASE: shop # base mongo
+      SPRING_REPOSITORY_ENABLE: 'true'
