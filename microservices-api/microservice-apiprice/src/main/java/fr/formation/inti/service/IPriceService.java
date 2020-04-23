@@ -17,5 +17,8 @@ public interface IPriceService {
 	public Mono<Price> update(Price p);
 	public Mono<Price> active(Price p);
 	public Mono<Price> desactive(Price p);
-//	public Flux<Price> getActiveByDate(Date d);
+
+
+
+	public Flux<Price> getActiveByDate(Date d);
 }

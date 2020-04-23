@@ -132,7 +132,7 @@ public class Endpoint {
 	    @RequestMapping(value = "/prices/{date}")
 
 	    public Flux<Price> getActiveByDate(@RequestParam(required = true, name = "date")
-	    	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm:ss.SSSZZZZ")Date date ) {
+	    	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm:ss.SSSZZZZ") Date date ) {
 	        log.info("Searching  {} ",date );
 	        return pricerepository.findByDateAndActive(date)
 
