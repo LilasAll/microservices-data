@@ -131,10 +131,10 @@ public class Endpoint {
 	    @GetMapping
 	    @RequestMapping(value = "/prices/{date}")
 
-	    public Flux<Price> getActiveByDate(@RequestParam(required = true, name = "date")
+	    public Flux<Price> getPrices(@RequestParam(required = true, name = "date")
 	    	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm:ss.SSSZZZZ")Date date ) {
 	        log.info("Searching  {} ",date );
-	        return pricerepository.findByDateAndActive(date)
+	        return pricerepository.searchByActiveAndDate(date)
 
 	                // uses of doNext
 

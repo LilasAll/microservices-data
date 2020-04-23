@@ -13,7 +13,7 @@ import reactor.core.publisher.Flux;
 public interface PriceRepository extends ReactiveMongoRepository<Price, Long> {
 
 	@Query("{'$and':[ {'active': true}, {'date': {$gte: ?0}} ] }")
-	Flux<Price> findByDateAndActive(Date date);
+	Flux<Price> searchByActiveAndDate(Date date);
 	
 	
 }

@@ -48,10 +48,6 @@ public class PriceServiceImpl implements IPriceService{
 		return priceRepository.save(p);
 	}
 
-//	@Override
-//	public Flux<Price> getActiveByDate(Date d) {
-//		// TODO Auto-generated method stub
-//		return priceRepository.findByDateAndActive(d);
-//	}
+
 
 }
