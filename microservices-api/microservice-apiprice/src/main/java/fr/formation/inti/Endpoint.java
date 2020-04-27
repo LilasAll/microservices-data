@@ -3,13 +3,17 @@ package fr.formation.inti;
 import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.status;
 
+import java.awt.Event;
 import java.util.Date;
 
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +49,7 @@ public class Endpoint {
 	IPriceService priceservice;
 	@Autowired
 	PriceRepository pricerepository;
+	
 	 @ExceptionHandler(ValidationParameterException.class)
 	    public Mono<ResponseEntity<String>> handlerValidationParameterException(ValidationParameterException e) {
 	     return Mono.just(
@@ -142,12 +147,35 @@ public class Endpoint {
 	        		.doOnNext(price -> log.info(price.getDate()+ " is found"));
 
 	    }
+	    @Value("${kafka.topic-name}")
+	    private String TOPIC;
+
+	    @Autowired
+	    private KafkaTemplate<String, Price> kafkaTemplate;
+
+	    @Value("${kafka.compression-type}")
+	    private String compressionType;
 	    
+	    
+//	    public void envoiePrixKafka(Price p) {
+//	        ProducerRecord<String, Price> producerRecord = new ProducerRecord<>(TOPIC, p.getIdPrix(), p);
+//	        kafkaTemplate.send(producerRecord);}
 	    @DeleteMapping
 	    @RequestMapping(value ="/delete{idPrix}")
 	    
-	    public Mono<Void> deleteById (@RequestParam(required = true, name = "idPrix") Long idPrix){
-	      return priceservice.deleteById(idPrix);
+	    public Mono<Void> deleteById (@RequestParam(required = true, name = "idPrix")Long idPrix){
+	    	Mono<Price> prix = pricerepository.findById(idPrix);
+	    	Date date = new Date ();
+	    	ProducerRecord<String, Price> producerRecord = new ProducerRecord<>(TOPIC,idPrix,prix);
+		    kafkaTemplate.send(producerRecord);
+		   return Mono.just(prix)
+	        .map(prix->
+	                {
+
+	                    return priceservice.deleteById(idPrix).subscribe().toString();
+
+	                });
+	      
 	    		  
 	             
 	    }

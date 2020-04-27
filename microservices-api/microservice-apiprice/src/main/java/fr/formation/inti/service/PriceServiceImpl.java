@@ -50,7 +50,7 @@ public class PriceServiceImpl implements IPriceService{
 
 	@Override
 	public Mono<Void> deleteById(Long idPrix) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub 
 		return priceRepository.deleteById(idPrix);
 	}
 

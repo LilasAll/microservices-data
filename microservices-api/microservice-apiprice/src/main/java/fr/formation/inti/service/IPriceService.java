@@ -19,4 +19,4 @@ public interface IPriceService {
 	public Mono<Price> desactive(Price p);
 	public Mono<Void> deleteById (Long idPrix);
 
-}
+} 
