@@ -138,9 +138,9 @@ public class Endpoint {
 	    @RequestMapping(value = "/prices/{date}")
 
 	    public Flux<Price> getPrices(@RequestParam(required = true, name = "date")
-	    	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm:ss.SSSZZZZ")Date date ) {
-	        log.info("Searching  {} ",date );
-	        return pricerepository.searchByActiveAndDate(date)
+	    	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm:ss.SSSZZZZ")Date date) {
+	        log.info("Searching  {} ",date);
+	        return priceservice.findByDateAndActive(date)
 
 	                // uses of doNext
 
@@ -156,28 +156,48 @@ public class Endpoint {
 	    @Value("${kafka.compression-type}")
 	    private String compressionType;
 	    
-	    
-//	    public void envoiePrixKafka(Price p) {
-//	        ProducerRecord<String, Price> producerRecord = new ProducerRecord<>(TOPIC, p.getIdPrix(), p);
-//	        kafkaTemplate.send(producerRecord);}
 	    @DeleteMapping
-	    @RequestMapping(value ="/delete{idPrix}")
-	    
-	    public Mono<Void> deleteById (@RequestParam(required = true, name = "idPrix")Long idPrix){
-	    	Mono<Price> prix = pricerepository.findById(idPrix);
-	    	Date date = new Date ();
-	    	ProducerRecord<String, Price> producerRecord = new ProducerRecord<>(TOPIC,idPrix,prix);
-		    kafkaTemplate.send(producerRecord);
-		   return Mono.just(prix)
-	        .map(prix->
-	                {
+        @RequestMapping(value ="/delete{idPrix}")
 
-	                    return priceservice.deleteById(idPrix).subscribe().toString();
+        public Mono<Void> deleteById (@RequestParam(required = true, name = "idPrix") Long idPrix){
+            Mono<Price> prix = pricerepository.findById(idPrix);
+            Date date = new Date ();
+//          Price p = new Price();
+            
+            ProducerRecord<String, Price>  producerRecord = new ProducerRecord<>(TOPIC, "test", new Price());
+        	kafkaTemplate.send(producerRecord);
+            
+//            Mono.just(prix).map( pr ->
+//            {
+//                //Price prix = pr.block();
+//            	ProducerRecord<String, Price>  producerRecord = new ProducerRecord<>(TOPIC,"test "+"", new Price());
+//            	kafkaTemplate.send(producerRecord);
+//            	return "";
+//            });
 
-	                });
-	      
-	    		  
-	             
-	    }
+//            ProducerRecord<String, Price> producerRecord = new ProducerRecord<>(TOPIC,prix.toString(), prix);
+//            kafkaTemplate.send(producerRecord);
+
+           return priceservice.deleteById(idPrix);}
+
+//	    @DeleteMapping
+//	    @RequestMapping(value ="/delete{idPrix}")
+//	    
+//	    public Mono<Void> deleteById (@RequestParam(required = true, name = "idPrix")Long idPrix){
+//	    	Mono<Price> prix = pricerepository.findById(idPrix);
+//	    	Date date = new Date ();
+//	    	ProducerRecord<String, Price> producerRecord = new ProducerRecord<>(TOPIC,prix);
+//		    kafkaTemplate.send(producerRecord);
+//		   return Mono.just(prix)
+//	        .map(prix->
+//	                {
+//
+//	                    return priceservice.deleteById(idPrix).subscribe().toString();
+//
+//	                });
+//	      
+//	    		  
+//	             
+//	    }
 	    
 }

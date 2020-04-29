@@ -12,8 +12,8 @@ camel:
   springboot:
     name: PriceEvent
 
-server:
-  port: 0
+#server:
+#  port: 0
 
 # kafka
 kafka:

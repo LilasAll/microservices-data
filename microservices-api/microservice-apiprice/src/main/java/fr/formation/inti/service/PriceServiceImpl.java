@@ -45,6 +45,8 @@ public class PriceServiceImpl implements IPriceService{
 	@Override
 	public Mono<Price> desactive(Price p) {
 		p.setActive(false);
+		
+		
 		return priceRepository.save(p);
 	}
 
@@ -52,6 +54,11 @@ public class PriceServiceImpl implements IPriceService{
 	public Mono<Void> deleteById(Long idPrix) {
 		// TODO Auto-generated method stub 
 		return priceRepository.deleteById(idPrix);
+	}
+	@Override
+	public Flux<Price> findByDateAndActive(Date date) {
+		
+		return priceRepository.searchByActiveAndDate(date);
 	}
 
 

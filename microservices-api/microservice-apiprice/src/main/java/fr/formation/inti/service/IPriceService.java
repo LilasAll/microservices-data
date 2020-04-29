@@ -18,5 +18,6 @@ public interface IPriceService {
 	public Mono<Price> active(Price p);
 	public Mono<Price> desactive(Price p);
 	public Mono<Void> deleteById (Long idPrix);
+	public Flux<Price> findByDateAndActive (Date date);
 
 } 
