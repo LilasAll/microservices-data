@@ -54,6 +54,12 @@ public class PriceServiceImpl implements IPriceService{
 		return priceRepository.deleteById(idPrix);
 	}
 
+	@Override
+	public Mono<Price> findById(Long idPrix) {
+		// TODO Auto-generated method stub
+		return priceRepository.findById(idPrix);
+	}
+
 
 
 }

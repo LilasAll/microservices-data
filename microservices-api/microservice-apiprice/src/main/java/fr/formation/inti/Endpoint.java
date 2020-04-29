@@ -157,24 +157,26 @@ public class Endpoint {
 	    private String compressionType;
 	    
 	    
-//	    public void envoiePrixKafka(Price p) {
-//	        ProducerRecord<String, Price> producerRecord = new ProducerRecord<>(TOPIC, p.getIdPrix(), p);
-//	        kafkaTemplate.send(producerRecord);}
+//	    public void findById(Long idPrix) {
+//	    	findById(idPrix);
+////	        ProducerRecord<String, Price> producerRecord = new ProducerRecord<>(TOPIC, p.getIdPrix(), p);
+////	        kafkaTemplate.send(producerRecord);
+//	    }
+	    
 	    @DeleteMapping
 	    @RequestMapping(value ="/delete{idPrix}")
 	    
-	    public Mono<Void> deleteById (@RequestParam(required = true, name = "idPrix")Long idPrix){
+	    public Mono<Void> deleteById (@RequestParam(required = true, name = "idPrix") Long idPrix){
 	    	Mono<Price> prix = pricerepository.findById(idPrix);
 	    	Date date = new Date ();
-	    	ProducerRecord<String, Price> producerRecord = new ProducerRecord<>(TOPIC,idPrix,prix);
+	    	Price p = new Price();
+	    	
+	    	Mono.just(p).map( pr -> prix);	    	
+	    	
+	    	ProducerRecord<String, Price> producerRecord = new ProducerRecord<>(TOPIC,p.toString(), p);
 		    kafkaTemplate.send(producerRecord);
-		   return Mono.just(prix)
-	        .map(prix->
-	                {
-
-	                    return priceservice.deleteById(idPrix).subscribe().toString();
-
-	                });
+		   
+		   return priceservice.deleteById(idPrix);
 	      
 	    		  
 	             
