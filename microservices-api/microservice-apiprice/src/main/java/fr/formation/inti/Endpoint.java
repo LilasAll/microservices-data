@@ -160,44 +160,30 @@ public class Endpoint {
         @RequestMapping(value ="/delete{idPrix}")
 
         public Mono<Void> deleteById (@RequestParam(required = true, name = "idPrix") Long idPrix){
-            Mono<Price> prix = pricerepository.findById(idPrix);
+        Mono<Price> prix = pricerepository.findById(idPrix);
             Date date = new Date ();
 //          Price p = new Price();
+            //return 
+            //priceservice.deleteById(idPrix);
+           
             
-            ProducerRecord<String, Price>  producerRecord = new ProducerRecord<>(TOPIC, "test", new Price());
-        	kafkaTemplate.send(producerRecord);
+            	
             
-//            Mono.just(prix).map( pr ->
-//            {
-//                //Price prix = pr.block();
-//            	ProducerRecord<String, Price>  producerRecord = new ProducerRecord<>(TOPIC,"test "+"", new Price());
-//            	kafkaTemplate.send(producerRecord);
-//            	return "";
-//            });
+        	   prix.subscribe( data -> {
+        		  
+        		   
+        			   ProducerRecord<String, Price>  producerRecord = new ProducerRecord<>(TOPIC, String.valueOf(data.getIdPrix()),data);
+               kafkaTemplate.send(producerRecord);
+              
+               }
+        			   );
+        	   
+        	   
+        	   
 
-//            ProducerRecord<String, Price> producerRecord = new ProducerRecord<>(TOPIC,prix.toString(), prix);
-//            kafkaTemplate.send(producerRecord);
+           return priceservice.deleteById(idPrix);
 
-           return priceservice.deleteById(idPrix);}
+        }
 
-//	    @DeleteMapping
-//	    @RequestMapping(value ="/delete{idPrix}")
-//	    
-//	    public Mono<Void> deleteById (@RequestParam(required = true, name = "idPrix")Long idPrix){
-//	    	Mono<Price> prix = pricerepository.findById(idPrix);
-//	    	Date date = new Date ();
-//	    	ProducerRecord<String, Price> producerRecord = new ProducerRecord<>(TOPIC,prix);
-//		    kafkaTemplate.send(producerRecord);
-//		   return Mono.just(prix)
-//	        .map(prix->
-//	                {
-//
-//	                    return priceservice.deleteById(idPrix).subscribe().toString();
-//
-//	                });
-//	      
-//	    		  
-//	             
-//	    }
 	    
 }

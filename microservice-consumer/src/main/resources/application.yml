@@ -1,0 +1,15 @@
+kafka:
+  boot-server: 192.168.99.100:29092
+  topic-name: price-v1
+  consumer-group-id: microservice-consumer-groupeId # très utile pour le consumer
+  client-id: microservice-consumer #important, c'est le nom du micro service
+# applicationId = client-id
+server:
+  port: 8082
+spring:
+  application:
+    name: sample-spring-elasticsearch
+  data:
+    elasticsearch:
+      cluster-name: projet-consumer
+      cluster-nodes: localhost:9300
