@@ -2,7 +2,7 @@ version: "3"
 services:
   microserviceconsumer:
     #network_mode: "host"
-    image: "api:latest"
+    image: "apiconsumer:latest"
     environment:
       SERVER_PORT: 8085
       SPRING_APPLICATION_NAME: microservice-consumer

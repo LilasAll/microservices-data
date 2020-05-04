@@ -2,7 +2,7 @@ version: "3"
 services:
   microserviceprice:
     #network_mode: "host"
-    image: "api:latest"
+    image: "apiprice:latest"
     environment:
       SERVER_PORT: 8085
       SPRING_APPLICATION_NAME: microservice-apiprice
