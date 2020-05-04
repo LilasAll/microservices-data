@@ -1,4 +1,4 @@
-package fr.formation.inti.data.kafka.model;
+package fr.formation.inti.elasticsearch.model;
 
 import java.util.Date;
 
