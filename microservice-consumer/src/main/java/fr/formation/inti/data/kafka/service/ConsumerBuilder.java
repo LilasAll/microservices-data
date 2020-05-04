@@ -17,5 +17,13 @@ public class ConsumerBuilder {
 	@KafkaListener(topics = "${kafka.topic-name}", groupId = "${kafka.consumer-group-id}")
 	public void consume(Price price) {
 		log.info("Price readed " + price.toString() ); 
-		elastic.enregistrer(price);
+		fr.formation.inti.elasticsearch.model.Price p = new fr.formation.inti.elasticsearch.model.Price();
+		
+		p.setIdPrix(price.getIdPrix());
+		p.setMontant(price.getMontant());
+//		p.setDate(price.getDate());
+		p.setActive(false);
+		p.setCode(price.getCode());
+		
+		elastic.enregistrer(p);
 }}

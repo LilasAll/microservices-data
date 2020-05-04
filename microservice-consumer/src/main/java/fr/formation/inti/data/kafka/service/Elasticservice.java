@@ -16,7 +16,7 @@ public class Elasticservice {
 @Autowired
 PriceRepository pricerepository;
 
-public void enregistrer (Price price) {
-	pricerepository.save(price);
+public void enregistrer (fr.formation.inti.elasticsearch.model.Price p) {
+	pricerepository.save(p);
 }
 }

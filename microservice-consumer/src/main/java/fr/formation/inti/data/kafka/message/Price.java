@@ -13,6 +13,5 @@ public class Price {
 	private double montant;
 	private boolean active;
 	private String code;
-
 	private Date date;
 }

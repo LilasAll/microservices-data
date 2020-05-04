@@ -8,5 +8,7 @@ import fr.formation.inti.data.kafka.message.Price;
 @Repository
 public interface PriceRepository extends ElasticsearchCrudRepository<Price, Long>{
 
+	void save(fr.formation.inti.elasticsearch.model.Price p);
+
 
 }
